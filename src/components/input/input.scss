@@ -1,0 +1,14 @@
+@import '../../index.scss';
+.input{
+  border: 1px solid $cyanPrimary;
+  background-color: rgba(0,0,0,0.1);
+  height: 100%;
+  width: 240px;
+  padding: 0px 15px 0px 15px;
+  font-size: 16px;
+  color: gainsboro;
+  &:focus-visible{
+      outline: 1px solid $greenPrimary;
+      background-color: $cyanSecondary;
+  }
+}

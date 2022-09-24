@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro&family=Syne+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap');
+
+html {
+    font-family: 'Anonymous Pro', monospace;
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+
+body {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: gainsboro;
+    font-family: 'Anonymous Pro', monospace;
+}
+input{
+    font-family: 'Anonymous Pro', monospace;
+}
+
+$bluePrimary: #3d43ff;
+$greenPrimary: #13c75e;
+$blackPrimary: #000c24;
+$whitePrimary: #e5ece3;
+$lightBgPrimary: rgb(230, 234, 240);
+$ligthBorderGray: rgb(105, 97, 97);
+$errorPrimary: #d61010;
+$errorBackground: rgba(230, 33, 33, 0.5);
+$successBackground: rgba(63, 243, 102, 0.5);
+$cyanPrimary: rgb(13, 228, 228);
+$cyanSecondary: rgb(13, 228, 228, 0.2);
+$cyanTerceary: rgb(13, 228, 228, 0.6);
+
+
+.hyperlink {
+    color: $bluePrimary;
+}
+
+.hyperlink:hover {
+    color: $cyanTerceary
+}
+
+.info {
+    font-size: 12px;
+    margin: 0px 0px 0px 0px;
+    width: 100%;
+    font-weight: 600;
+}
+
+/* input error message */
+.error {
+    margin: 0px 0px 0px 10px;
+    font-size: 14px;
+    color: $errorPrimary
+}
+
+.alert {
+    position: fixed;
+    text-align: center;
+    left: 0px;
+    right: 0px;
+    top: 2%;
+    width: max-content;
+    margin: auto;
+    padding: 10px 20px 10px 20px;
+    border-radius: 5px;
+}
+
+.alert_error {
+    color: $errorPrimary;
+    background-color: $errorBackground;
+}
+
+.alert_success {
+    color: $greenPrimary;
+    background-color: $successBackground;
+}
+.error_in_form{
+    color: red;
+    margin: -10px 0px 8px 0px;
+    padding: 0;
+    font-size: 14px;
+}
+
+#backVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+}
+
+.official_title {
+    color: $cyanPrimary;
+    margin-bottom: 20px;
+    font-family: 'Syne Mono', monospace;
+    font-size: 26px;
+    letter-spacing: 0.5ch;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.page-content {
+    display: flex;
+    border: 1px solid $cyanTerceary;
+    margin: 5px;
+    padding: 3px;
+    height: 89vh
+}
+
+.denied {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+        padding: 30px;
+        color: $cyanPrimary;
+        border: 2px solid $cyanTerceary;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        width: max-content;
+        font-size: 30px;
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+}
+
+#backVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+}
