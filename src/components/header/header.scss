@@ -1,0 +1,40 @@
+@import '../../index.scss';
+
+.header_root{
+  border: 1px solid $cyanTerceary;
+  height: 6vh;
+  width: 99.5%;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+}
+.icon_expand{
+  color: $cyanTerceary;
+  margin: 5px;
+  &:hover{
+    cursor: pointer;
+    color: $cyanPrimary;
+  }
+}
+.container_icons_expand{
+  border-left: 1px solid $cyanTerceary;
+  height: 100%;
+  width: max-content;
+  margin-inline-start: auto;
+  display: flex;
+  align-items: center;
+  padding: 0px 10px 0px 10px;
+}
+.container_logout{
+  border-left: 1px solid $cyanTerceary;
+  border-right: 1px solid $cyanTerceary;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  width: max-content;
+  padding: 0px 10px 0px 10px;
+  &:hover{
+    cursor: pointer;
+    color: $cyanPrimary
+  }
+}

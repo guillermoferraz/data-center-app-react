@@ -11,18 +11,7 @@ const Register = lazy(() => import('./page/register').then(({ Register }) => ({ 
 
 
 const App = () => {
-  
-  const root = document.getElementById('root');
-  
-  const toggleFullScreen = ()  => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
-    } /*else if (document.exitFullscreen) {
-      document.exitFullscreen();
-    }*/
-  }
 
-  useEffect(()=> {root && setTimeout(() =>{ toggleFullScreen()},500)},[])
 
   return (
     <Router>

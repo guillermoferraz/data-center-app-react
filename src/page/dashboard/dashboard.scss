@@ -1,0 +1,28 @@
+@import '../../index.scss';
+
+.page_root{
+  width: 99vw;
+  height: 99vh;
+  margin: auto;
+}
+.content_root{
+  margin: 5px;
+  height: 91vh;
+  width: 100%;
+  display: flex;
+}
+.container_root{
+  border: 1px solid $cyanTerceary;
+  width: 82vw;
+  margin: 0px 0px 0px 5px;
+  height: 90vh;
+}
+.form_m{
+  padding: 30px;
+  border-bottom: 1px solid $cyanTerceary;
+}
+.container_input_f_m{
+  &>input{
+    height: 30px
+  }
+}

@@ -1,0 +1,42 @@
+@import '../../index.scss';
+
+.container_alert {
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0,0,0,0.7);
+
+}
+.content_alert {
+  background-color: rgba(0,0,0,0.9);
+  height: max-content;
+  width: max-content;
+  min-width: 300px;
+  border: 1px solid $cyanPrimary;
+  padding: 30px;
+}
+.alert_title{
+  font-family: 'Syne Mono', monospace;
+  color: $cyanPrimary;
+  text-transform: uppercase;
+  text-align: center;
+}
+.alert_description{
+  text-align: center;
+}
+#line-container {
+  width: 300px;
+  height: 40px;
+  margin: 50px auto;
+}
+.progress-text{
+  text-align: center;
+  width: 100%;
+}

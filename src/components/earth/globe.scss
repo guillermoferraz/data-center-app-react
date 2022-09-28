@@ -1,0 +1,19 @@
+.container_globe{
+  position: fixed !important;
+  margin: 0;
+  padding: 0;
+  &>div{
+    &>div{
+      width: 80vw !important;
+      height: 90vh;
+      &>div{
+        &>div{
+          &>canvas{
+            width: 80vw !important;
+            height: 90vh !important;
+          }
+        }
+      }
+    }
+  }
+}

@@ -7,6 +7,7 @@ interface InputTypes {
   name?: string;
   autoComplete?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string|number;
 }
 
 export const Input = ({
@@ -15,7 +16,8 @@ export const Input = ({
   type,
   name,
   autoComplete,
-  onChange
+  onChange,
+  value
 }:InputTypes) => {
   return (
     <input
@@ -26,6 +28,7 @@ export const Input = ({
       name={name}
       autoComplete={autoComplete}
       onChange={onChange}
+      value={value}
       />
   )
 }

@@ -1,0 +1,25 @@
+@import '../../index.scss';
+
+.module_viwer_container{
+  border: 1px solid $cyanTerceary;
+  max-height: 25vh;
+  overflow-y: auto;
+  margin: 8px
+}
+.module_viwer_item{
+  color: $cyanTerceary;
+  margin: 3px;
+  padding: 3px;
+  &:hover{
+    color: black;
+    font-weight: 700;
+    cursor: pointer;
+    background-color: $cyanTerceary;
+  }
+}
+.m_v_i_selected{
+  color: black;
+  background-color: $cyanTerceary;
+  font-weight: 700;
+  border: 1px solid $cyanPrimary;
+}

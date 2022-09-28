@@ -1,20 +1,26 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Input } from "../../components/input";
 import { Button } from "../../components/button";
+import { Alert } from "../../components/alert";
 import { RegisterSchema } from "../../schema/forms/register.schema";
 import { isValidEmail, isValidPassword, digits, isAlpha } from "../../constants/regexp";
 
 
 import './register.scss';
 import { Link } from "react-router-dom";
+import { RootSate, useAppDispatch } from "../../hooks/hooks";
+import { useSelector } from "react-redux";
+import authSlice, { register } from "../../store/auth/auth";
+import { registerInitialState } from "../../store/auth/states";
 
-type Errors = {
-  name?: string;
-  message?: string;
-}
 
 export const Register = () => {
   const BackVideo = require('../../assets/files/background.mp4');
+  const dispatch = useAppDispatch();
+  const { registerResponse } = useSelector((state: RootSate) => state.auth);
+  const { setCleanRegisterResponse } = authSlice.actions;
+  const navigate = useNavigate();
   const entries: { [key: string]: string }[] = [
     {
       id: 'firstname',
@@ -69,7 +75,20 @@ export const Register = () => {
   const [errorConfirmPassword, setErrorConfirmPassword] = useState({ active: false, message: 'The password and the confirmation do not match' })
   const [enableSubmit, setEnableSubmit] = useState(false);
   const [showErrors, setShowErrors] = useState(false);
+  const [alert, setAlert] = useState<{active: boolean, title: string, description: string, action?: string}>({ active: false, title: "", description: '', action: undefined });
 
+  useEffect(() => {
+    if(registerResponse?.status === 200){
+      setAlert({ active: true, title: 'Register Success', description: 'Your data has been correctly registered', action: "/"})
+    } else if (registerResponse?.status === 409){
+      setAlert({ active: true, title: 'Denied !', description: registerResponse?.message || "" , action: "/register"})
+      setTimeout(() => {
+        dispatch(setCleanRegisterResponse({ value: {...registerInitialState} }))
+      },5000)
+    } else {
+      setAlert({ active: false, title: '', description: '', action: undefined })
+    }
+  },[registerResponse])
 
   useEffect(() => {
     if(!formValues.firstname ||  formValues.firstname.length < 2 || digits.test(formValues.firstname) || !isAlpha.test(formValues.firstname)) {
@@ -124,7 +143,7 @@ export const Register = () => {
 
   const handleSubumit = () => {
     if(enableSubmit){
-      console.log('form values:', formValues)
+      dispatch(register(formValues))
     }
   }
   
@@ -165,9 +184,9 @@ export const Register = () => {
       <video autoPlay muted loop id="backVideo">
         <source src={BackVideo} type="video/mp4" />
       </video>
+      {alert.active && <Alert title={alert?.title} description={alert?.description} size="big" loading action={alert?.action}/>}
       <div className="container_form">
         <h1 className="official_title">Data Center</h1>
-
         {entries && entries.map(e => (
           <React.Fragment>
             <div key={e.id} className="container_input" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && handlePreSubmit()}>

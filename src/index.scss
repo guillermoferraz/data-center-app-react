@@ -14,8 +14,14 @@ body {
     -moz-osx-font-smoothing: grayscale;
     color: gainsboro;
     font-family: 'Anonymous Pro', monospace;
+    overflow-y: hidden;
+    overflow-x: hidden;
 }
-input{
+input {
+    font-family: 'Anonymous Pro', monospace;
+}
+
+textarea {
     font-family: 'Anonymous Pro', monospace;
 }
 
@@ -32,6 +38,18 @@ $cyanPrimary: rgb(13, 228, 228);
 $cyanSecondary: rgb(13, 228, 228, 0.2);
 $cyanTerceary: rgb(13, 228, 228, 0.6);
 
+
+::-webkit-scrollbar {
+	width: 8px;
+	background-color: black;
+	height: 8px;
+}
+::-webkit-scrollbar-thumb{
+	background-color: $cyanTerceary;
+
+}
+::-webkit-scrollbar-track{
+}
 
 .hyperlink {
     color: $bluePrimary;
@@ -76,7 +94,8 @@ $cyanTerceary: rgb(13, 228, 228, 0.6);
     color: $greenPrimary;
     background-color: $successBackground;
 }
-.error_in_form{
+
+.error_in_form {
     color: red;
     margin: -10px 0px 8px 0px;
     padding: 0;
@@ -141,4 +160,58 @@ $cyanTerceary: rgb(13, 228, 228, 0.6);
     min-width: 100%;
     min-height: 100%;
     z-index: -1;
+}
+
+.textarea {
+    padding: 5px 0px 0px 8px;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    border-radius: 15px;
+    height: 20px;
+    width: 85px;
+    margin: 5px;
+    background-color: $cyanTerceary;
+    outline: none;
+    transition: background-color .3s;
+    color: black;
+    &:hover{
+        cursor: pointer;
+    }
+
+    &:checked {
+        background-color: lighten($cyanPrimary, 10%);
+        color: black;
+        transition: background-color .3s;
+    }
+
+    &::after {
+        display: block;
+        content: 'Is public';
+        position: relative;
+        right: -50px;
+        top: 3px;
+        margin-left: 44px;
+        color: $cyanPrimary;
+        font-weight: bold;
+        transition: right .8s;
+        width: max-content;
+
+    }
+
+    &:checked::after {
+        display: block;
+        content: 'Is private';
+        position: relative;
+        right: 38px;
+        top: 3px;
+        color: black;
+        font-weight: bold;
+        width: max-content;
+    }
+}
+.content_root_f{
+    max-height: 90vh;
+    overflow-y: auto;
 }
