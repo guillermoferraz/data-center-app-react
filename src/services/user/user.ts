@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { env } from '../environments';
 
 const User = {
   getUser: async () => {
     const token = typeof window !== 'undefined' ? sessionStorage.getItem('dc_tkn') : ""
-    const response =  await axios.get('http://localhost:4201/user',
+    const response =  await axios.get(`${env.host}/user`,
     {
       headers:{
         'Authorization': `${token}`

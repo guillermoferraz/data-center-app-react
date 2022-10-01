@@ -1,0 +1,42 @@
+@import '../../index.scss';
+
+.modal_default{
+  position: absolute;
+  z-index: 5;
+  border: 1px solid $cyanPrimary;
+  width: max-content;
+  height: max-content;
+  background-color: black;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  padding: 40px;
+}
+.title_modal_def{
+  font-size: 20px;
+  color: $cyanPrimary;
+  text-align: center;
+  text-transform: uppercase;
+}
+.description_modal_def{
+  max-width: 300px;
+  text-align: center;
+}
+.container_btn_def_modal{
+  display: flex;
+  flex-flow: wrap;
+  width: 100%;
+  justify-content: center;
+  &>button{
+    width: max-content;
+    padding: 10px;
+    margin: 20px;
+    text-transform: uppercase;
+  }
+}

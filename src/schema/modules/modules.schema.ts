@@ -1,4 +1,4 @@
-import { ModuleTypes } from "./module.types";
+import { ModuleTypes, SubmoduleType } from "./module.types";
 
 export const ModuleSchema: ModuleTypes = {
    Id: undefined, 
@@ -7,3 +7,13 @@ export const ModuleSchema: ModuleTypes = {
    Created_At: undefined, 
    Private: undefined 
 };
+
+export const SubmodulesSchema: SubmoduleType = {
+   Id: undefined,
+   ModuleId: undefined,
+   Name: undefined,
+   Description: undefined,
+   Content: undefined,
+   Private: undefined,
+   Created_At: undefined,
+}

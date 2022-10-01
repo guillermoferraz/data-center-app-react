@@ -4,6 +4,8 @@
   border: 1px solid $cyanPrimary;
   margin-bottom: 5px;
   margin-top: 5px;
+  position: relative;
+
 }
 .selector_default_container{
   display: flex;
@@ -34,6 +36,7 @@
   max-height: 200px;
   overflow-y: auto;
   background-color: black;
+  z-index: 3;
   &>p{
     padding: 5px;
     margin: 0;

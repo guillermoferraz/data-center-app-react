@@ -38,3 +38,17 @@
     color: $cyanPrimary
   }
 }
+.container_reader{
+  position: absolute;
+  top: 40px;
+  right: 20px;
+  display: flex;
+  width: 500px;
+  z-index: 4;
+}
+.textarea_reader{
+  width: 100%;
+  color: $cyanPrimary;
+  background-color: black;
+  padding: 20px;
+}

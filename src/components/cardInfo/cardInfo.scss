@@ -4,16 +4,13 @@
   border: 1px solid $cyanTerceary;
   position: absolute;
   width: 200px;
-  height: 300px;
+  height: max-content;
   z-index: 2;
   right: 20px;
   margin-top: 10px;
-  background-color: rgba(0,0,0,0.7);
+  background-color: rgba(0,0,0,0.9);
 }
-.card_info_row_1{
-}
-.container_total_modules{
-}
+
 .cnt_total_m_title{
   font-size: 14px;
   text-transform: uppercase;
@@ -25,8 +22,7 @@
   padding: 5px;
   text-align: center;
 }
-.cnt_t_m_tbl_r_1{
-}
+
 .tbl_r_i{
   display: flex;
   justify-content: space-between;
@@ -49,5 +45,18 @@
   float: right;
   &:hover{
     cursor: pointer;
+  }
+}
+.icons_small{
+  color: $cyanTerceary;
+  border-bottom: 1px solid $cyanTerceary;
+  justify-content: flex-end;
+  margin: 5px;
+  &>svg{
+    margin: 5px;
+    &:hover{
+      cursor: pointer;
+      color: $cyanPrimary;
+    }
   }
 }

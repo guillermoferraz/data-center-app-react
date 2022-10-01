@@ -1,10 +1,13 @@
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { 
   faArrowDown,
   faArrowUp
 } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
 import './selector.scss'
+
+import moduleSlice from '../../store/modules/modules';
+import { useAppDispatch } from '../../hooks/hooks';
 
 interface SelectorTypes {
   values: any[];
@@ -24,11 +27,15 @@ export const Selector = ({
   placeholder,
   width
 }: SelectorTypes) => {
+  const dispatch = useAppDispatch();
+
   const [open, setOpen] = useState(false);
+  const { setModuleSelected } = moduleSlice.actions;
 
   const handleSelectValue = (v:any) => {
     setOpen(false)
     setSelectedValue && setSelectedValue(v)
+    dispatch(setModuleSelected(v))
   }
 
   return (

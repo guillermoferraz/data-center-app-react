@@ -1,0 +1,23 @@
+@import '../../index.scss';
+.content_editor{
+  max-height: 80vh;
+  overflow: auto;
+  background-color: aliceblue;
+  padding: 20px;
+  color: black;
+  margin: 15px;
+}
+.icons_edit_menu_contentsubmodule{
+  color: $cyanTerceary;
+  border: 1px solid $cyanTerceary;
+  padding: 10px;
+  &:hover{
+    border: 1px solid $cyanPrimary;
+    color: black;
+    background-color: $cyanTerceary;
+    cursor: pointer;
+  }
+}
+.nav_edit_contentsubmodule{
+  border-bottom: 1px solid $cyanTerceary;
+}

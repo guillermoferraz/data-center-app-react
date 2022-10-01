@@ -11,16 +11,16 @@ import { Input } from "../../components/input";
 import { Alert } from "../../components/alert";
 import { Editor } from "../../components/editor";
 
-import './dashboard.scss';
+import '../dashboard/dashboard.scss';
 
 /* Store */
-import modulesSlice, { addModule, getModules, addSubmodule, getSubmodulesByModule } from "../../store/modules/modules";
+import modulesSlice, { patchModule, getModules, patchSubmodule, getSubmodulesByModule } from "../../store/modules/modules";
 import { CardInfo } from "../../components/cardInfo";
 import { Selector } from "../../components/selector";
 import { ModuleTypes } from "../../schema/modules/module.types";
 import { es } from "../../schema/voice/dictionary";
 
-export const Dashboard = () => {
+export const EditModules = () => {
   /* Speech */
   const  { useSpeechSynthesis } = require('react-speech-kit');
   const { speak, voices } = useSpeechSynthesis();
@@ -30,22 +30,22 @@ export const Dashboard = () => {
   const dispatch = useAppDispatch();
   const { userData } = useSelector((state: RootSate) => state.user);
   const { 
-    addNewModule, 
-    addNewSubmodule, 
-    addModuleResponse, 
+    editModule,
+    editSubmodule,
+    patchModuleResponse, 
     modules, 
-    addSubmoduleResponse, 
+    patchSubmoduleResponse, 
     showInfoCard,
-    submodulesByModule,
+    submoduleSelected,
     moduleSelected } = useSelector((state: RootSate) => state.modules);
-  const { setCleanAddModuleResponse, setCleanAddSubmoduleResponse } = modulesSlice.actions;
+  const { setCleanPatchModuleResponse, setCleanPatchSubmoduleResponse } = modulesSlice.actions;
 
 
   const [alert, setAlert] = useState(false);
-  const [newModuleValues, setNewModuleValues] = useState({ name: '', description: '', private: false })
-  const [newSubmoduleValues, setNewSubmoduleValues] = useState({ name: '', description: '', private: false })
-  const [content, setContent] = useState('');
-  const [alertNewModule, setAlertNewModule] = useState<{ active: boolean, message?: string, title?:string }>({ active: false, message: '', title: '' })
+  const [patchModuleValues, setPatchModuleValues] = useState({id: '' ,name: '', description: '', private: false })
+  const [patchSubmoduleValues, setPatchSubmoduleValues] = useState({ id: '' ,name: '', description: '', private: false, moduleId: '' })
+  const [patchContent, setPatchContent] = useState('');
+  const [alertPatchModule, setAlertPatchModule] = useState<{ active: boolean, message?: string, title?:string }>({ active: false, message: '', title: '' })
   const [relationModule, setRelationModule] = useState<{Id: string | undefined ,Name: string | undefined }>({ Id: undefined, Name: undefined })
   const [errorRequiredSubmodule, setErrorRequiredSubmodule] = useState(false);
   const [errorRequiredModule, setErrorRequiredModule] = useState(false);
@@ -59,33 +59,51 @@ export const Dashboard = () => {
     }
   }
 
-
   useEffect(() => {
     dispatch(getUser())
     dispatch(getModules())
   }, [])
 
   useEffect(() => {
-    if(addModuleResponse?.status === 200 || addModuleResponse?.status === 500) {
-      if(addModuleResponse?.status === 200) speak({ text: es.success.newModuleAdded, voice })
-      if(addModuleResponse?.status === 500) speak({ text: es.errors.newModuleAdded, voice })
-
-      setAlertNewModule({ active: true, message: addModuleResponse?.message, title: addModuleResponse?.status === 200 ? 'Success' : 'Error' })
-    } else {
-      setAlertNewModule({ active: false, message: "", title: "" }) 
-    }
-  },[addModuleResponse])
+    setPatchModuleValues({
+      name: moduleSelected.Name||"",
+      description: moduleSelected.Description||"",
+      private: moduleSelected.Private|| false,
+      id: moduleSelected.Id||""
+    })
+  },[moduleSelected])
 
   useEffect(() => {
-    if(alertNewModule.active){
-      addModuleResponse?.status === 200 && dispatch(getModules())
+    setPatchSubmoduleValues({
+      id: submoduleSelected.Id||"",
+      name: submoduleSelected.Name||"",
+      description: submoduleSelected.Description||"",
+      moduleId: submoduleSelected.ModuleId||"",
+      private: submoduleSelected.Private||false
+    })
+    setPatchContent(submoduleSelected.Content||"")
+  },[submoduleSelected])
+
+  useEffect(() => {
+    if(patchModuleResponse?.status === 200 || patchModuleResponse?.status === 500) {
+      if(patchModuleResponse?.status === 200) speak({ text: es.success.patchModule, voice })
+      if(patchModuleResponse?.status === 500) speak({ text: es.errors.patchModule, voice })
+
+      setAlertPatchModule({ active: true, message: patchModuleResponse?.message, title: patchModuleResponse?.status === 200 ? 'Success' : 'Error' })
+    } else {
+      setAlertPatchModule({ active: false, message: "", title: "" }) 
+    }
+  },[patchModuleResponse])
+
+  useEffect(() => {
+    if(alertPatchModule.active){
+      patchModuleResponse?.status === 200 && dispatch(getModules())
       setTimeout(() =>{
-        dispatch(setCleanAddModuleResponse())
-        dispatch(setCleanAddModuleResponse())
-        setAlertNewModule({ active: false, message: "", title: "" })
+        dispatch(setCleanPatchModuleResponse())
+        setAlertPatchModule({ active: false, message: "", title: "" })
       },2500)
     }
-  },[alertNewModule])
+  },[alertPatchModule])
 
   useEffect(() => {
     setAlert(false)
@@ -93,41 +111,41 @@ export const Dashboard = () => {
   }, [userData])
 
   useEffect(() => {
-    if(addSubmoduleResponse?.status === 200 || addSubmoduleResponse?.status === 500) {
-      if(addSubmoduleResponse?.status === 200){
+    if(patchSubmoduleResponse?.status === 200 || patchSubmoduleResponse?.status === 500) {
+      if(patchSubmoduleResponse?.status === 200){
         dispatch(getSubmodulesByModule(moduleSelected?.Id || ""))
-        speak({ text: es.success.newSubmoduleAdded, voice })
-        setAlertNewModule({ active: false, message: "", title: "" }) 
+        speak({ text: es.success.patchSubmodule, voice })
+        setAlertPatchModule({ active: false, message: "", title: "" }) 
       } 
-      if(addSubmoduleResponse?.status === 500) speak({ text: es.errors.newSubmoduleAdded, voice })
+      if(patchSubmoduleResponse?.status === 500) speak({ text: es.errors.patchSubmodule, voice })
 
-      setAlertNewModule({ active: true, message: addSubmoduleResponse?.message, title: addSubmoduleResponse?.status === 200 ? 'Success' : 'Error' })
+      setAlertPatchModule({ active: true, message: patchSubmoduleResponse?.message, title: patchSubmoduleResponse?.status === 200 ? 'Success' : 'Error' })
     } else {
-      setAlertNewModule({ active: false, message: "", title: "" }) 
+      setAlertPatchModule({ active: false, message: "", title: "" }) 
     }
-  },[addSubmoduleResponse])
+  },[patchSubmoduleResponse])
 
-  const handleSubmitModule = () => {
-    if(newModuleValues.name.length > 0 && newModuleValues?.description){
+  const handleSubmitPatchModule = () => {
+    if(patchModuleValues.name.length > 0 && patchModuleValues?.description){
       setErrorRequiredModule(false)
-      dispatch(addModule(newModuleValues))
+      dispatch(patchModule(patchModuleValues))
     } else {
       setErrorRequiredModule(true)
       speak({ text: es.errors.allInputsRequired, voice })
     }
   }
-  const handleSubmitSubmodule = () => {
-    if(newSubmoduleValues?.description && newSubmoduleValues?.name && relationModule?.Id){
+  const handleSubmitPatchSubmodule = () => {
+    if(patchSubmoduleValues?.description && patchSubmoduleValues?.name && relationModule?.Id){
       setErrorRequiredSubmodule(false)
-      dispatch(addSubmodule({
-        name: newSubmoduleValues?.name,
-        description: newSubmoduleValues?.description,
-        private: newSubmoduleValues?.private,
+      dispatch(patchSubmodule({
+        id: patchSubmoduleValues?.id,
+        name: patchSubmoduleValues?.name,
+        description: patchSubmoduleValues?.description,
+        private: patchSubmoduleValues?.private,
         moduleId: relationModule?.Id,
-        content: content
+        content: patchContent
       }))
     } else {
-      
       setErrorRequiredSubmodule(true)
       speak({ text: es.errors.allInputsRequired, voice })
     }
@@ -142,21 +160,21 @@ export const Dashboard = () => {
     <div className="page_root">
       <Header />
       {alert && (<Alert size="big" title="Denied!" description="You do not have permissions for that section" loading action="/" />)}
-      {alertNewModule.active && (<Alert size="big" title={alertNewModule?.title} description={alertNewModule?.message} />)}
+      {alertPatchModule.active && (<Alert size="big" title={alertPatchModule?.title} description={alertPatchModule?.message} />)}
       <div className="content_root">
         <PrincipalMenu />
         <div className="container_root">
           {showInfoCard && <CardInfo/>}
           <div className="content_root_f">
-          {addNewModule && (
-            <div className="form_m" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && handleSubmitModule() }>
+          {editModule && (
+            <div className="form_m" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && handleSubmitPatchModule() }>
               <div className="container_input_f_m" style={{ width: 'max-content' }}>
                 <Input
-                  id="add_new_module"
+                  id="patch_module"
                   placeholder="Module name"
                   type="text"
-                  onChange={(e) => setNewModuleValues({ ...newModuleValues, name: e.target.value })}
-                  value={newModuleValues?.name}
+                  onChange={(e) => setPatchModuleValues({ ...patchModuleValues, name: e.target.value })}
+                  value={patchModuleValues?.name}
                 />
               </div>
               <div className="container_input_f_m" style={{ width: 'max-content' }}>
@@ -165,23 +183,24 @@ export const Dashboard = () => {
                   className="input textarea"
                   style={{ marginTop: 5, width: 260 }}
                   placeholder="Description"
-                  onChange={(e) => setNewModuleValues({ ...newModuleValues, description: e.target.value })}
+                  onChange={(e) => setPatchModuleValues({ ...patchModuleValues, description: e.target.value })}
+                  value={patchModuleValues?.description}
                 >
-                  {newModuleValues?.description}
+                  {patchModuleValues?.description}
                 </textarea>
               </div>
               <div className="check_container_a1">
                 <div style={{ width: 'max-content' }}>
-                  <input className="checkbox" type="checkbox" checked={newModuleValues?.private} onChange={(e) => setNewModuleValues({ ...newModuleValues, private: e.target.checked })} />
+                  <input className="checkbox" type="checkbox" checked={patchModuleValues?.private} onChange={(e) => setPatchModuleValues({ ...patchModuleValues, private: e.target.checked })} />
                 </div>
               </div>
               <div className="container_btn" style={{ width: 270 }}>
               {errorRequiredModule && <p className="error">All fields are required</p>}
-                <button className='btn-submit-small' style={{ width: '100%' }} onClick={() => handleSubmitModule()}>Add</button>
+                <button className='btn-submit-small' style={{ width: '100%' }} onClick={() => handleSubmitPatchModule()}>Upload</button>
               </div>
             </div>
           )}
-          {addNewSubmodule && (
+          {editSubmodule && (
             <div className="form_m">
               <Selector
                 values={modules||[]}
@@ -196,8 +215,8 @@ export const Dashboard = () => {
                   id="add_new_module"
                   placeholder="Submodule name"
                   type="text"
-                  onChange={(e) => setNewSubmoduleValues({ ...newSubmoduleValues, name: e.target.value })}
-                  value={newSubmoduleValues?.name}
+                  onChange={(e) => setPatchSubmoduleValues({ ...patchSubmoduleValues, name: e.target.value })}
+                  value={patchSubmoduleValues?.name}
                 />
               </div>
               <div className="container_input_f_m" style={{ width: 'max-content' }}>
@@ -206,27 +225,27 @@ export const Dashboard = () => {
                   className="input textarea"
                   style={{ marginTop: 5, width: 260 }}
                   placeholder="Description"
-                  onChange={(e) => setNewSubmoduleValues({ ...newSubmoduleValues, description: e.target.value })}
+                  onChange={(e) => setPatchSubmoduleValues({ ...patchSubmoduleValues, description: e.target.value })}
+                  value={patchSubmoduleValues?.description}
                 >
-                  {newSubmoduleValues?.description}
+                  {patchSubmoduleValues?.description}
                 </textarea>
               </div>
               <div className="check_container_a1">
                 <div style={{ width: 'max-content' }}>
-                  <input className="checkbox" type="checkbox" checked={newSubmoduleValues?.private} onChange={(e) => setNewSubmoduleValues({ ...newSubmoduleValues, private: e.target.checked })} />
+                  <input className="checkbox" type="checkbox" checked={patchSubmoduleValues?.private} onChange={(e) => setPatchSubmoduleValues({ ...patchSubmoduleValues, private: e.target.checked })} />
                 </div>
               </div>
               <div style={{ color: '#000c24' }}>
-                <Editor content={content} setContent={(e: string) => setContent(e)}/>
+                <Editor content={patchContent} setContent={(e: string) => setPatchContent(e)}/>
               </div>
               <div className="container_btn" style={{ width: 270 }}>
                 {errorRequiredSubmodule && <p className="error">All fields are required</p>}
-                <button className='btn-submit-small' style={{ width: '100%' }} onClick={() => handleSubmitSubmodule()}>Add</button>
+                <button className='btn-submit-small' style={{ width: '100%' }} onClick={() => handleSubmitPatchSubmodule()}>Upload</button>
               </div>
             </div>
           )}
           </div>
-          {!addNewModule && !addNewSubmodule && <Earth />}          
         </div>
       </div>
     </div>

@@ -34,6 +34,7 @@
   }
 }
 .s_m_add{
+  margin-top: 10px;
   &:hover{
     color: $cyanPrimary;
     cursor: pointer;
@@ -57,5 +58,14 @@
       opacity: .75;
       border: 1px solid $cyanTerceary;
       cursor: pointer;
+  }
+}
+.icon_info_small_p_m{
+  color: $cyanTerceary;
+  float: right;
+  margin-right: 10px;
+  &:hover{
+    color: $cyanPrimary;
+    cursor: pointer;
   }
 }

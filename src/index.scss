@@ -24,7 +24,10 @@ input {
 textarea {
     font-family: 'Anonymous Pro', monospace;
 }
-
+p  {
+    margin: 0;
+    padding: 0;
+}
 $bluePrimary: #3d43ff;
 $greenPrimary: #13c75e;
 $blackPrimary: #000c24;
@@ -119,6 +122,9 @@ $cyanTerceary: rgb(13, 228, 228, 0.6);
     letter-spacing: 0.5ch;
     text-align: center;
     text-transform: uppercase;
+    &:hover{
+        cursor: pointer;
+    }
 }
 
 .page-content {
@@ -214,4 +220,14 @@ input[type="checkbox"] {
 .content_root_f{
     max-height: 90vh;
     overflow-y: auto;
+}
+.backWall{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.8);
+    z-index: 3;
 }

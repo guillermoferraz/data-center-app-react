@@ -8,4 +8,5 @@ export interface SubmoduleTypes {
   description: string;
   private: boolean;
   moduleId: string;
+  content: string;
 }
